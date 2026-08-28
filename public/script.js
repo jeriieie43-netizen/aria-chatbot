@@ -6,6 +6,14 @@ const input = document.getElementById('input');
 const sendBtn = document.getElementById('sendBtn');
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
+const suggestions = document.getElementById('suggestions');
+
+suggestions?.addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  input.value = chip.dataset.prompt || '';
+  composer.requestSubmit();
+});
 
 let history = [];
 let isStreaming = false;
@@ -55,6 +63,7 @@ composer.addEventListener('submit', async (e) => {
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
+    let sawError = false;
     let firstChunk = true;
 
     while (true) {
@@ -81,6 +90,7 @@ composer.addEventListener('submit', async (e) => {
               chat.scrollTop = chat.scrollHeight;
             }
             if (evt.error) {
+              sawError = true;
               assistantEl.textContent = "⚠️ " + evt.error;
             }
           } catch (_) {}
@@ -88,9 +98,9 @@ composer.addEventListener('submit', async (e) => {
       }
     }
 
-    if (!fullText) {
+    if (!fullText && !sawError) {
       assistantEl.textContent = "Désolé, je n'ai pas pu générer de réponse.";
-    } else {
+    } else if (fullText) {
       history.push({ role: 'assistant', content: fullText });
     }
   } catch (err) {
