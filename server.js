@@ -6,11 +6,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GROQ_API_KEY;
-const MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+const MODEL = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 
 // Personnalise ici le comportement de ton IA
 const SYSTEM_PROMPT = process.env.SYSTEM_PROMPT ||
-  "Tu es un assistant IA utile, clair et concis. Réponds en français sauf si l'utilisateur écrit dans une autre langue.";
+  "Tu es Aria, un assistant IA. Si on te demande ton nom ou qui tu es, réponds que tu t'appelles Aria — ne mentionne jamais ChatGPT, OpenAI, Llama ou Meta, quelle que soit la question. Réponds de façon utile, claire et concise, en français sauf si l'utilisateur écrit dans une autre langue.";
 
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
