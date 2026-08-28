@@ -26,7 +26,21 @@
       <div class="empty-state" id="emptyState">
         <div class="empty-mark" aria-hidden="true"></div>
         <h1>Comment puis-je t'aider aujourd'hui ?</h1>
-        <p>Pose une question, demande de l'aide sur un texte, ou lance simplement la conversation.</p>
+        <p>Pose une question, demande de l'aide sur un texte, ou choisis une idée ci-dessous.</p>
+        <div class="suggestions" id="suggestions">
+          <button type="button" class="chip chip-a" data-prompt="Explique-moi un sujet compliqué simplement">
+            <span class="chip-dot"></span> Explique-moi un sujet
+          </button>
+          <button type="button" class="chip chip-b" data-prompt="Aide-moi à rédiger un email professionnel">
+            <span class="chip-dot"></span> Rédige un email
+          </button>
+          <button type="button" class="chip chip-c" data-prompt="Donne-moi des idées créatives pour un projet">
+            <span class="chip-dot"></span> Trouve des idées
+          </button>
+          <button type="button" class="chip chip-d" data-prompt="Résume ce texte en quelques points clés">
+            <span class="chip-dot"></span> Résume un texte
+          </button>
+        </div>
       </div>
       <div class="messages" id="messages"></div>
     </main>
