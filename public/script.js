@@ -7,12 +7,22 @@ const sendBtn = document.getElementById('sendBtn');
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
 const suggestions = document.getElementById('suggestions');
+const homeBtn = document.getElementById('homeBtn');
 
 suggestions?.addEventListener('click', (e) => {
   const chip = e.target.closest('.chip');
   if (!chip) return;
   input.value = chip.dataset.prompt || '';
   composer.requestSubmit();
+});
+
+homeBtn?.addEventListener('click', () => {
+  history = [];
+  messagesEl.innerHTML = '';
+  emptyState.style.display = 'flex';
+  input.value = '';
+  input.style.height = 'auto';
+  input.focus();
 });
 
 let history = [];
