@@ -8,6 +8,10 @@
   --accent: #6E7BFF;
   --accent-2: #9AA4FF;
   --accent-soft: rgba(110, 123, 255, 0.14);
+  --coral: #FF6B6B;
+  --amber: #FFB86B;
+  --teal: #2DD4BF;
+  --pink: #F472B6;
   --radius-lg: 20px;
   --radius-md: 14px;
   --font-display: 'Space Grotesk', sans-serif;
@@ -33,8 +37,9 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(600px 300px at 20% -10%, rgba(110,123,255,0.10), transparent 60%),
-    radial-gradient(500px 260px at 90% 0%, rgba(110,123,255,0.06), transparent 60%);
+    radial-gradient(560px 300px at 12% -8%, rgba(110,123,255,0.18), transparent 60%),
+    radial-gradient(480px 260px at 92% 4%, rgba(45,212,191,0.10), transparent 60%),
+    radial-gradient(520px 320px at 50% 105%, rgba(255,107,107,0.08), transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
@@ -70,19 +75,25 @@ body::before {
 }
 
 .brand-mark {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--accent), var(--pink) 55%, var(--amber));
   display: inline-block;
   position: relative;
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 .brand-mark::after {
   content: "";
   position: absolute;
-  inset: 7px;
-  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
   background: var(--bg);
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .status {
@@ -133,11 +144,29 @@ body::before {
 }
 
 .empty-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  margin-bottom: 6px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--pink) 55%, var(--amber));
+  margin-bottom: 10px;
+  position: relative;
+  transform: rotate(45deg);
+  animation: float 4s ease-in-out infinite;
+}
+.empty-mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--bg);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+@keyframes float {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-6px); }
 }
 
 .empty-state h1 {
@@ -153,6 +182,53 @@ body::before {
   margin: 0;
   font-size: 14px;
   max-width: 320px;
+}
+
+.suggestions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 28px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease, background 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+.chip:active { transform: translateY(0); }
+
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.chip-a .chip-dot { background: var(--accent); }
+.chip-b .chip-dot { background: var(--teal); }
+.chip-c .chip-dot { background: var(--pink); }
+.chip-d .chip-dot { background: var(--amber); }
+
+@media (max-width: 520px) {
+  .suggestions { grid-template-columns: 1fr; max-width: 320px; }
 }
 
 .messages {
@@ -191,7 +267,7 @@ body::before {
 }
 
 .msg.user .bubble {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #8B6BFF);
   color: #fff;
   border-radius: 18px 18px 4px 18px;
 }
@@ -199,6 +275,7 @@ body::before {
 .msg.assistant .bubble {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 2px solid var(--teal);
   border-radius: 18px 18px 18px 4px;
 }
 
@@ -258,20 +335,21 @@ body::before {
   height: 38px;
   border-radius: 50%;
   border: none;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--pink));
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
-.composer button:hover { background: var(--accent-2); }
+.composer button:hover { filter: brightness(1.1); }
 .composer button:active { transform: scale(0.94); }
 .composer button:disabled {
   background: var(--surface-2);
   color: var(--text-muted);
   cursor: not-allowed;
+  filter: none;
 }
 
 .disclaimer {
